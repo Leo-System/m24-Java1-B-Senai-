@@ -5,7 +5,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (Leo) 
  * @version (20/04/2024)
  */
-public class Mosca extends Actor
+public class Mosca extends Inseto
 {
     /**
      * O método act sepre será executado quando se apertar o botão act ou ficará em execução constante quando o botão run for apertado.
@@ -14,8 +14,6 @@ public class Mosca extends Actor
     {
         // Add your action code here.
         move(1);
-        if(isAtEdge()){
-            turn(180);    
-        }
+        verificarCanto();
     }
 }
