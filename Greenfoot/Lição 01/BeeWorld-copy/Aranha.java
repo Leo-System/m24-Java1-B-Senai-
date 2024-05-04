@@ -23,5 +23,42 @@ public class Aranha extends Inseto
             turn(Greenfoot.getRandomNumber(90)-45);
         }
         verificarCanto();
+        acelerarAranha();
+        capturaMosca();
+        //Interceptando a abelha.
+        interceptarAbelha();
+    }
+    
+    /***
+     * Método que irá acelerar a aranha em determinada área do tabuleiro.
+     */
+    public void acelerarAranha(){
+           if (getX() >= 200 && getX()<=600 && getY() >=100 && getY() <=500){
+               move(2);
+           }
+    }
+
+    /***
+     * método que captura a mosca pela Aranha.
+     */
+    public void capturaMosca(){
+        //verificando se tocou na mosca.
+        if (isTouching( Mosca.class )){
+            //remove a mosca.
+            removeTouching( Mosca.class );
+            //Adicionando uma nova mosca.
+            int pX = Greenfoot.getRandomNumber(getWorld().getWidth()), pY = Greenfoot.getRandomNumber(getWorld().getHeight());
+            getWorld().addObject(new Mosca() , pX, pY);
+        }
+    }
+
+    public void interceptarAbelha(){
+        //Cast de BeeWorld => Força o mindo a ser do tipo BeeWorld.
+        Abelha ab = ((BeeWorld) getWorld()).getAbelha();
+        if (ab != null){
+            turnTowards(ab.getX(), ab.getY());
+        }
     }
 }
+
+

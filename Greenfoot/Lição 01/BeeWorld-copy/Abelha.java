@@ -8,6 +8,24 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Abelha extends Actor
 {
+    //Constantes:
+    public static final int PONTOS = 100;
+    //Campos ou fields.
+    public int vidas = 0;
+    public int score = 0;
+    //criando um campo do tipo conjunto de imagens.    
+    private GreenfootImage[] imagens;
+    //Constructors.
+    public Abelha(){
+        vidas = 3;
+        score = 0;
+        //Definir o tamanho do conjunto:
+        imagens = new GreenfootImage[4]; //Definindo o tamanho do conjuntp em 4 elementos.
+        //definir as imagens:
+        for (int i = 0; i < 4; i++){
+            imagens[i] = new GreenfootImage("bee0"+ (i+1) + ".png");
+        }
+    }
     /**
      * Constructor da classe BeeWorld
      */
@@ -18,15 +36,23 @@ public class Abelha extends Actor
         
         //Apertar para a esquerda gira -10 graus.
         if(Greenfoot.isKeyDown("left")){
-            turn(-10);
+            turn(-5);
         }else if(Greenfoot.isKeyDown("right")){
-            turn(10);
+            turn(5);
+        }else if(Greenfoot.isKeyDown("up")){
+            move(3);
         }
         
         //verificando se esta nos cantos.
         verificarPosicao();
         //verifica se toca em uma mosca.
         capturaMosca();
+        //Verifica se foi capturada pela Aranha.
+        capturadaPelaAranha();
+        //Mostrando as vidas.
+        mostrarVidas();
+        //Mostrando score:
+        mostrarScore();
     }
     
     /**
@@ -92,8 +118,37 @@ public class Abelha extends Actor
             removeTouching( Mosca.class );
             //Adicionando uma nova mosca.
             int pX = Greenfoot.getRandomNumber(getWorld().getWidth()), pY = Greenfoot.getRandomNumber(getWorld().getHeight());
-            getWorld().addObject(new Mosca() , pX, pY);
+            getWorld().addObject(new Mosca(Greenfoot.getRandomNumber(5)+1, Greenfoot.getRandomNumber(360)) , pX, pY);
+            Greenfoot.playSound("slurp.mp3");
+            //Aumentando o score:
+            score += PONTOS;
         }
     }
+    
+    /***
+     * método que irá capturar a abelha pela aranha.
+     */
+    public void capturadaPelaAranha(){
+        int pX = Greenfoot.getRandomNumber(getWorld().getWidth()), pY = Greenfoot.getRandomNumber(getWorld().getHeight());
+        
+        if (isTouching(Aranha.class)){
+            setLocation(pX, pY);
+            Greenfoot.playSound("oomph.mp3");
+            vidas--; //decremento
+            if (vidas < 1){
+                Greenfoot.stop();
+                getWorld().showText("GAME OVER!!!", 400, 300);
+            }
+        }
+    }
+
+    public void mostrarVidas(){
+        getWorld().showText("vidas: "+ vidas, 60, 20);
+    }
+
+    public void mostrarScore(){
+        getWorld().showText("score: "+ score, 700, 20);
+    }
 }
+
 
