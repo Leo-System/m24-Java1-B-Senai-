@@ -13,6 +13,7 @@ public class Abelha extends Actor
     //Campos ou fields.
     public int vidas = 0;
     public int score = 0;
+    public int imgIdx = 0;
     //criando um campo do tipo conjunto de imagens.    
     private GreenfootImage[] imagens;
     //Constructors.
@@ -52,7 +53,9 @@ public class Abelha extends Actor
         //Mostrando as vidas.
         mostrarVidas();
         //Mostrando score:
-        mostrarScore();
+        //mostrarScore();
+        //Trocando os sprites da abelha.
+        trocarImagem();
     }
     
     /**
@@ -122,6 +125,8 @@ public class Abelha extends Actor
             Greenfoot.playSound("slurp.mp3");
             //Aumentando o score:
             score += PONTOS;
+            //Colocando o socore do mundo
+            ((BeeWorld) getWorld()).addScore(PONTOS);
         }
     }
     
@@ -148,6 +153,15 @@ public class Abelha extends Actor
 
     public void mostrarScore(){
         getWorld().showText("score: "+ score, 700, 20);
+    }
+    
+    public void trocarImagem(){
+        setImage(imagens[imgIdx]);
+        imgIdx = (imgIdx + 1) % 4;
+        //imgIdx++;
+        //if (imgIdx >= 4){
+        //    imgIdx = 0;
+        //}
     }
 }
 

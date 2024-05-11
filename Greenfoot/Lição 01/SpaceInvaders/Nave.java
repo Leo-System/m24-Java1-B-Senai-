@@ -24,7 +24,7 @@ public class Nave extends Actor
         }
         //Conferindo se deu o tiro.
         if (Greenfoot.isKeyDown("space")){
-            getWorld().addObject(new Bala(), getX(), getY()-60);
+            ((SpaceInvadersWorld) getWorld()).criarBala(getX(), getY()-45);
         }
     }
 }
