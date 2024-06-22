@@ -7,12 +7,12 @@ public class Carta {
 	private String naipe;
 	private String numero;
 	
-	public Carta(int np, int vl) {
+	public Carta(int np, int vl) throws Exception {
 		if (np<1 || np>4) {
-			System.out.println("Naipe Inválido!");
+			throw new Exception("Naipe invélido!");
 		}
 		if (vl<1 || vl>13) {
-			System.out.println("Número da carta inválido!");
+			throw new Exception("Número de carta invélido!");
 		}
 		
 		naipe = NAIPES[np-1];
